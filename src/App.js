@@ -4,7 +4,7 @@ import {Container, Row, Col} from 'react-bootstrap';
 import './App.css';
 
 const API = 'https://randomuser.me/api/';
-const DEFAULT_QUERY = '?results=50';
+const DEFAULT_QUERY = '?results=50&seed=abc?inc=name,location,email,login,phone,cell.picture,nat';
 
 //https://randomuser.me/api/?nat=us,dk,fr,gb
 //https://randomuser.me/api/?inc=gender,name,nat
@@ -16,20 +16,27 @@ class App extends Component {
 
     this.state = {
       users: [],
-      hasMoreItems: true
+      hasMoreItems: true,
+      page: 1
     };
   }
 
   loadItems() {
-    console.log('loading');
-    fetch(API + DEFAULT_QUERY) 
+    let url = API + DEFAULT_QUERY + '&page=' + this.state.page
+    fetch(url) 
       .then(response => response.json())
-      .then(data => this.setState({ users: data.results }));
+      .then(data => 
+        {
+          this.setState({
+            users: this.state.users.concat(data.results),
+            page: this.state.page + 1 
+        })
+    });
   }
 
   render() {
     const { users } = this.state;
-    const loader = <Row className="loader">Loading ...</Row>;
+    const loader = <div className="loader">Loading ...</div>;
 
     var items = [];
     users.map((user, i) => {
@@ -46,18 +53,18 @@ class App extends Component {
     });
 
     return (
+      <Container>
         <InfiniteScroll
             pageStart={0}
             loadMore={this.loadItems.bind(this)}
             hasMore={this.state.hasMoreItems}
             loader={loader}>
-
-            <Container>
-              <Row>
-                {items}
-              </Row>
-            </Container>
+       
+          <Row>
+            {items}
+          </Row>
         </InfiniteScroll>
+      </Container>
     );
   
   }
