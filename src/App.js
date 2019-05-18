@@ -3,12 +3,10 @@ import InfiniteScroll from 'react-infinite-scroller';
 import {Container, Row, Col} from 'react-bootstrap';
 import './App.css';
 
+import User from './Components/User'
+
 const API = 'https://randomuser.me/api/';
 const DEFAULT_QUERY = '?results=50&seed=abc?inc=name,location,email,login,phone,cell.picture,nat';
-
-//https://randomuser.me/api/?nat=us,dk,fr,gb
-//https://randomuser.me/api/?inc=gender,name,nat
-//https://randomuser.me/api/?page=3&results=10&seed=abc
 
 class App extends Component {
   constructor(props) {
@@ -38,17 +36,10 @@ class App extends Component {
     const { users } = this.state;
     const loader = <div className="loader">Loading ...</div>;
 
-    var items = [];
+    let items = [];
     users.map((user, i) => {
         items.push(
-            <Col xs={6} md={3} className="thumb" key={i}>
-              <a href="#" target="_blank">
-                  <img src={user.picture.large} width="128" height="128" />
-                  <div className="name">{user.name.first} {user.name.last}</div>
-              </a>
-              <div className="login">{user.login.username}</div>
-              <div className="email">{user.email}</div> 
-            </Col>
+            <User user={user} />
         );
     });
 
