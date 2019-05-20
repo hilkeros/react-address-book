@@ -20,7 +20,7 @@ class UserDetail extends Component {
 	          <Container>
 	          	<Row>
 	          		<Col>
-	          			<img src={user.picture.large} width="128" height="128" />
+	          			<img src={user.picture.large} alt={user.name.first} width="128" height="128" />
           			</Col>
           			<Col>
 				          <p>

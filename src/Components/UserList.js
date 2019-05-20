@@ -56,7 +56,7 @@ class UserList extends Component {
   		);
 
     let items = [];
-    this.state.shownUsers.map((user, i) => {
+    this.state.shownUsers.map((user) => {
         items.push(
             <User user={user} key={user.login.uuid} />
         );

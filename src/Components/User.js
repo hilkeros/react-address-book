@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Container, Row, Col} from 'react-bootstrap';
+import {Col} from 'react-bootstrap';
 
 import UserDetail from './UserDetail'
 
@@ -15,7 +15,7 @@ class User extends Component {
 		return (
 			<Col xs={6} md={3} className="thumb" key={user.login.uuid}>
 			  <a href='#' onClick={() => this.setState({ modalShow: true })}>
-			      <img src={user.picture.large} width="128" height="128" />
+			      <img src={user.picture.large} alt={user.name.first} width="128" height="128" />
 			      <div className="name">{user.name.first} {user.name.last}</div>
 			  </a>
 			  <div className="login">{user.login.username}</div>
