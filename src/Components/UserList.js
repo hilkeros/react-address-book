@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import {Container, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col, Form} from 'react-bootstrap';
 import User from './User';
 import spinner from '../loading.gif'
 
@@ -71,7 +71,7 @@ class UserList extends Component {
       filteredUsers: filteredUsers,
       shownUsers: filteredUsers,
       query: query,
-      hasMoreItems: query.length > 0
+      hasMoreItems: query.length < 1
     })
   }
 
@@ -92,12 +92,12 @@ class UserList extends Component {
 
     return (
       <Container>
-        <Row>
+        <Row className="header">
           <Col>
-            <input type="text" className="SearchInput"
-                      placeholder="Search..."
-                      onChange={this.handleSearch}
-            />
+            <h1>Address Book</h1>
+            <Form>
+              <Form.Control type="text" placeholder="Search..." onChange={this.handleSearch}/>
+            </Form>
           </Col>
         </Row>
         <InfiniteScroll
@@ -106,7 +106,7 @@ class UserList extends Component {
             hasMore={this.state.hasMoreItems}
             loader={loader}>
        
-          <Row>
+          <Row className='userlist'>
             {items}
           </Row>
         </InfiniteScroll>
