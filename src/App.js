@@ -5,8 +5,12 @@ import UserList from './Components/UserList'
 
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {nationality: 'CH'}
+  }
   render() {
-    return <UserList/>
+    return <UserList nationality={this.state.nationality} />
   }
 
 }

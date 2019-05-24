@@ -38,7 +38,7 @@ class UserList extends Component {
       hasMoreItems = false;
       endOfListMessage = 'End of user catalog';
     }
-    const url = API + DEFAULT_QUERY + '&page=' + page;
+    const url = API + DEFAULT_QUERY + '&nat=' + this.props.nationality + '&page=' + page;
     fetch(url) 
       .then(response => response.json())
       .then(data => 
@@ -94,7 +94,7 @@ class UserList extends Component {
       <Container>
         <Row className="header">
           <Col>
-            <h1>Address Book</h1>
+            <h1>Address Book ({this.props.nationality})</h1>
             <Form>
               <Form.Control type="text" placeholder="Search..." onChange={this.handleSearch}/>
             </Form>

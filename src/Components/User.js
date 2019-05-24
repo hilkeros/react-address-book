@@ -4,8 +4,8 @@ import {Col} from 'react-bootstrap';
 import UserDetail from './UserDetail'
 
 class User extends Component {
-	constructor(...args) {
-		super(...args);
+	constructor(props) {
+		super(props);
 		this.state = { modalShow: false}
 	}
 	render() {
