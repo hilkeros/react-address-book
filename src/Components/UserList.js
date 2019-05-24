@@ -14,18 +14,24 @@ class UserList extends Component {
 
     this.state = {
       users: [],
+      filteredUsers: [],
       shownUsers: [],
       hasMoreItems: true,
       page: 1,
       cursor: 0,
-      endOfListMessage: ''
+      endOfListMessage: '',
+      query: ''
     };
+    this.handleSearch = this.handleSearch.bind(this);
+    this.loadItems = this.loadItems.bind(this);
   }
 
+ 
   loadItems() {
-    let {cursor, hasMoreItems, endOfListMessage, users, shownUsers, page} = this.state;
+    let {cursor, hasMoreItems, endOfListMessage, users, shownUsers, page, query} = this.state;
     if (users.length > 49){
-      shownUsers = shownUsers.concat(users.slice(cursor, cursor + 50));
+      let filteredUsers = this.filterUsers(users, query);
+      shownUsers = shownUsers.concat(filteredUsers.slice(cursor, cursor + 50));
       cursor = cursor + 50;
     } 
     if (users.length > 999) {
@@ -48,9 +54,31 @@ class UserList extends Component {
     });
   }
 
+  filterUsers(users, query) {
+    const lowercasedQuery = query.toLowerCase();
+    if (lowercasedQuery === "") {
+      return users;
+    } else {
+     return users.filter(u => (u.name.first + ' ' + u.name.last).includes(lowercasedQuery));
+    }
+  }
+
+  handleSearch(event){
+    const users = this.state.users;
+    const query = event.target.value;
+    const filteredUsers = this.filterUsers(users, query);
+    this.setState({ 
+      filteredUsers: filteredUsers,
+      shownUsers: filteredUsers,
+      query: query,
+      hasMoreItems: query.length > 0
+    })
+  }
+
+ 
   render() {
     const loader = (
-    	<div className="centered">
+    	<div className="centered" key="loader">
     		<img src={spinner} alt="Loading ..." width="30" />
   		</div>
   		);
@@ -64,9 +92,17 @@ class UserList extends Component {
 
     return (
       <Container>
+        <Row>
+          <Col>
+            <input type="text" className="SearchInput"
+                      placeholder="Search..."
+                      onChange={this.handleSearch}
+            />
+          </Col>
+        </Row>
         <InfiniteScroll
             pageStart={0}
-            loadMore={this.loadItems.bind(this)}
+            loadMore={this.loadItems}
             hasMore={this.state.hasMoreItems}
             loader={loader}>
        
