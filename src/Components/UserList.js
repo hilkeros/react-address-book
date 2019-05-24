@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import axios from 'axios';
 import {Container, Row, Col, Form} from 'react-bootstrap';
 import User from './User';
 import spinner from '../loading.gif'
@@ -39,19 +40,20 @@ class UserList extends Component {
       endOfListMessage = 'End of user catalog';
     }
     const url = API + DEFAULT_QUERY + '&nat=' + this.props.nationality + '&page=' + page;
-    fetch(url) 
-      .then(response => response.json())
-      .then(data => 
-        {
-          this.setState({
+    axios.get(url) 
+      .then(result => this.setState({
             shownUsers: shownUsers,
             cursor: cursor,
             hasMoreItems: hasMoreItems,
             endOfListMessage: endOfListMessage,
-            users: users.concat(data.results),
+            users: users.concat(result.data.results),
             page: page + 1
-        })
-    });
+        }))
+      .catch(error => this.setState({
+        error,
+        hasMoreItems: false,
+        endOfListMessage: 'No internet connection'
+      }))
   }
 
   filterUsers(users, query) {
