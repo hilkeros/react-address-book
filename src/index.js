@@ -10,6 +10,11 @@ import Settings from './Components/Settings';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
+// The address book lives in the App Component and is accessible at the root path ('/'')
+// In the Settings Component (at '/settings') the user can set a nationality for the address book.
+// The React Router provides a link to both pages of the app.
+// The Redux store is only used to pass the nationality prop.
+
 const routing = (
   <Provider store={store}>
 	  <Router>

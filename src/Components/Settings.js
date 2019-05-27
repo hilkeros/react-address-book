@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setNationality } from "../redux/actions";
 import {Container, Row, Col, Form} from 'react-bootstrap';
 
+// The Settings Component contains a select box to dispatch the nationality to the redux store.
 class Settings extends React.Component {
   handleChange(event){
   	const nationality = event.target.value;

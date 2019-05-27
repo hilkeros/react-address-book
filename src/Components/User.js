@@ -3,6 +3,7 @@ import {Col} from 'react-bootstrap';
 
 import UserDetail from './UserDetail'
 
+// We use a Bootstrap Modal that is hidden by default. it opens the UserDetail component on click.
 class User extends Component {
 	constructor(props) {
 		super(props);
