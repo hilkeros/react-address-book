@@ -1,13 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setNationality } from "../redux/actions";
 import {Container, Row, Col, Form} from 'react-bootstrap';
-import App from '../App';
-
 
 class Settings extends React.Component {
   handleChange(event){
-  	const nat = event.target.value;
-  	console.log(nat);
-  	this.setState({nationality: nat})
+  	const nationality = event.target.value;
+  	this.props.setNationality(nationality);
   }
   render() {
     return (
@@ -18,7 +17,11 @@ class Settings extends React.Component {
     	    	<Form>
     	    		<Form.Group>
     	    	    <Form.Label>Nationality</Form.Label>
-    	    	    <Form.Control as="select" onChange={this.handleChange.bind(this)}>
+    	    	    <Form.Control 
+    	    	    	as="select"
+    	    	    	value={this.props.nationality}
+    	    	    	onChange={this.handleChange.bind(this)}
+	    	    		>
     	    	      <option>CH</option>
     	    	      <option>ES</option>
     	    	      <option>FR</option>
@@ -33,4 +36,16 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+const mapStateToProps = state => {
+    return { nationality: state.nationality };
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setNationality: nationality => dispatch(setNationality(nationality))
+  };
+}
+
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(Settings)

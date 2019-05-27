@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios';
 import {Container, Row, Col, Form} from 'react-bootstrap';
@@ -27,7 +28,6 @@ class UserList extends Component {
     this.loadItems = this.loadItems.bind(this);
   }
 
- 
   loadItems() {
     let {cursor, hasMoreItems, endOfListMessage, users, shownUsers, page, query} = this.state;
     if (users.length > 49){
@@ -124,4 +124,10 @@ class UserList extends Component {
 
 }
 
-export default UserList;
+const mapStateToProps = state => {
+    return { nationality: state.nationality };
+  };
+
+export default connect(
+  mapStateToProps,
+)(UserList)
